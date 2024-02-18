@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form, { QuoteProps } from "./Form";
+import httpClient from "../../utils/httpClient";
 
 type QuoteDetailsProps = {
   quote: QuoteProps;
@@ -36,6 +37,15 @@ const Quote = ({ quote, index, handleUpdateQuote, handleDeleteQuote }: QuoteType
     handleDeleteQuote(index);
   }
 
+  useEffect(() => {
+    httpClient.get('/api/users/detail', { withCredentials: true })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 
   if (open) {
     return (
